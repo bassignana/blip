@@ -96,15 +96,21 @@ const babelLoaderConfiguration = [
 ];
 
 // This is needed for webpack to import static images in JavaScript files
-const imageLoaderConfiguration = {
-  test: /\.(gif|jpe?g|png|svg)$/,
-  use: {
-    loader: 'url-loader',
-    options: {
-      name: '[name].[ext]',
+const imageLoaderConfiguration = [
+  {
+    test: /\.(gif|jpe?g|png)$/,
+    use: {
+      loader: 'url-loader',
+      options: {
+        name: '[name].[ext]',
+      },
     },
   },
-};
+  {
+    test: /\.svg$/,
+    use: ['@svgr/webpack', 'url-loader'],
+  },
+];
 
 const fontLoaderConfiguration = [
   {
@@ -257,7 +263,7 @@ module.exports = {
   module: {
     rules: [
       ...babelLoaderConfiguration,
-      imageLoaderConfiguration,
+      ...imageLoaderConfiguration,
       styleLoaderConfiguration,
       ...fontLoaderConfiguration,
     ],
