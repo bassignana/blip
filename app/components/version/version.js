@@ -17,10 +17,11 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Text } from 'rebass/styled-components';
 
 const Version = (props) => {
   return (
-    <div className="Version">{`v${props.version}`}</div>
+    <Text mt={2} sx={{ fontSize: '11px', color: 'grays.5', fontWeight: 'medium' }}>{`v${props.version}`}</Text>
   );
 };
 

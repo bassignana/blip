@@ -659,11 +659,11 @@ export class AppComponent extends React.Component {
     );
 
     return (
-      <div className='container-nav-outer footer'>
-        <div className='container-nav-inner'>
+      <div className='footer'>
+        <div>
           {shouldDisplayFooterLinks ?
               <FooterLinks trackMetric={this.props.context.trackMetric} /> : null}
-          <div className='footer-section'>
+          <div>
             {this.renderVersion()}
           </div>
         </div>
