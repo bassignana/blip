@@ -21,7 +21,7 @@ import { Text } from 'rebass/styled-components';
 
 const Version = (props) => {
   return (
-    <Text mt={2} sx={{ fontSize: '11px', color: 'grays.5', fontWeight: 'medium' }}>{`v${props.version}`}</Text>
+    <Text className="Version" mt={2} sx={{ fontSize: '11px', color: 'grays.5', fontWeight: 'medium' }}>{`v${props.version}`}</Text>
   );
 };
 
