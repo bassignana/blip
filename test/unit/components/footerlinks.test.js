@@ -1,7 +1,7 @@
 /* global afterEach, before, chai, describe, it, sinon */
 
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import FooterLinks from '../../../app/components/footerlinks/';
 
@@ -14,7 +14,7 @@ describe('FooterLinks', () => {
   };
 
   before(() => {
-    wrapper = shallow(<FooterLinks {...props} />);
+    wrapper = mount(<FooterLinks {...props} />);
   });
 
   afterEach(() => {
@@ -50,7 +50,7 @@ describe('FooterLinks', () => {
 
     links.forEach((link) => {
       it(`a#${link.id} should fire the trackMetric function when clicked`, () => {
-        const linkEl = wrapper.find(`#${link.id}`);
+        const linkEl = wrapper.find(`#${link.id}`).hostNodes();
         expect(props.trackMetric.callCount).to.equal(0);
         linkEl.simulate('click');
         expect(props.trackMetric.callCount).to.equal(1);
