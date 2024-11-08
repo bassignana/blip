@@ -17,12 +17,15 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import bows from 'bows';
+import bows from 'bows';  // @t colorful logs
 import _ from 'lodash';
-import { asyncWithLDProvider } from 'launchdarkly-react-client-sdk';
+import { asyncWithLDProvider } from 'launchdarkly-react-client-sdk'; //@t feature flat roll out
 
 import './core/language'; // Set the language before loading components
-import blipCreateStore from './redux/store';
+import blipCreateStore from './redux/store'; // @t i'll not find this name since when i import a
+// folder a index.js is loaded, that index.js file is ointiung to configureStore.*.js which are
+// exporting an anonymus function that i name here in the import
+
 import { ldContext } from './redux/utils/launchDarklyMiddleware';
 
 import { getRoutes } from './routes';
@@ -37,6 +40,7 @@ import detectTouchScreen from './core/notouch';
 // For React developer tools
 window.React = React;
 
+// @t not react related, this is a config obj
 export let appContext = {
   log: __DEV_TOOLS__ ? bows('App') : _.noop,
   api: api,
@@ -53,6 +57,7 @@ appContext.trackMetric = (...args) => {
   return appContext.api.metrics.track.apply(appContext.api.metrics, args);
 };
 
+// @t if i change appContext.log, will appContext.props.log also change?
 appContext.props = {
   log: appContext.log,
   api: appContext.api,

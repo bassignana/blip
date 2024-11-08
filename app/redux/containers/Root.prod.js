@@ -14,7 +14,7 @@ export default class Root extends Component {
     return (
       <ThemeProvider theme={baseTheme}>
         <ToastProvider>
-          <Provider store={store}>
+          <Provider store={store}> {/* @t Provider wraps the whole app so that every function has access to the store*/}
             <KeycloakWrapper>
               <div>
                 <ConnectedRouter history={history}>

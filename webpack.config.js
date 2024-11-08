@@ -220,7 +220,7 @@ const output = {
 
 const resolve = {
   alias: {
-    ...linkedPackages,
+    '@tidepool/viz': path.resolve(__dirname, '../viz'),
     'babel-core': path.resolve('node_modules/babel-core'),
     classnames: path.resolve('node_modules/classnames'),
     lodash: path.resolve('node_modules/lodash'),
@@ -240,7 +240,7 @@ const resolve = {
     stream: require.resolve('readable-stream'),
     zlib: require.resolve('browserify-zlib'),
     util: require.resolve('util/'),
-    assert: require.resolve('assert/')
+    assert: require.resolve('assert')
   },
 };
 

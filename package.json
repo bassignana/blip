@@ -3,7 +3,7 @@
   "engines": {
     "node": "20.8.0"
   },
-  "packageManager": "yarn@3.6.4",
+  "packageManager": "yarn@4.5.1",
   "version": "1.82.0-web-3015-dep-updates.1",
   "private": true,
   "scripts": {

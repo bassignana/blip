@@ -38,6 +38,7 @@ import { header as Header } from '../../components/chart';
 import { basics as Basics } from '../../components/chart';
 import { daily as Daily } from '../../components/chart';
 import Trends from '../../components/chart/trends';
+import MyChart from '../../components/chart/myChart';
 import Stats from '../../components/chart/stats';
 import { bgLog as BgLog } from '../../components/chart';
 import { settings as Settings } from '../../components/chart';
@@ -65,7 +66,7 @@ const { Loader } = vizComponents;
 const { getLocalizedCeiling, getTimezoneFromTimePrefs } = vizUtils.datetime;
 const { commonStats, getStatDefinition } = vizUtils.stat;
 const { isCustomBgRange } = vizUtils.bg;
-
+// @t ES5
 export const PatientDataClass = createReactClass({
   displayName: 'PatientData',
 
@@ -627,6 +628,34 @@ export const PatientDataClass = createReactClass({
             ref="tideline"
             removeGeneratedPDFS={this.props.removeGeneratedPDFS} />
           );
+      case 'myChart':
+        return (
+          <MyChart
+            addingData={this.props.addingData}
+            chartPrefs={this.state.chartPrefs}
+            currentPatientInViewId={this.props.currentPatientInViewId}
+            data={this.props.data}
+            initialDatetimeLocation={this.state.datetimeLocation}
+            loading={this.state.loading}
+            mostRecentDatetimeLocation={this.state.mostRecentDatetimeLocation}
+            onClickRefresh={this.handleClickRefresh}
+            onClickPrint={this.handleClickPrint}
+            onSwitchToBasics={this.handleSwitchToBasics}
+            onSwitchToDaily={this.handleSwitchToDaily}
+            onSwitchToTrends={this.handleSwitchToTrends}
+            onSwitchToSettings={this.handleSwitchToSettings}
+            onSwitchToBgLog={this.handleSwitchToBgLog}
+            onUpdateChartDateRange={this.handleChartDateRangeUpdate}
+            patient={this.props.patient}
+            stats={stats}
+            trackMetric={this.props.trackMetric}
+            updateChartPrefs={this.updateChartPrefs}
+            uploadUrl={this.props.uploadUrl}
+            queryDataCount={this.getMetaData('queryDataCount')}
+            key={this.state.chartKey}
+            ref="tideline"
+            removeGeneratedPDFS={this.props.removeGeneratedPDFS} />
+        );
       case 'bgLog':
         return (
           <BgLog
@@ -1150,6 +1179,7 @@ export const PatientDataClass = createReactClass({
     this.props.trackMetric('Clicked Message Pool Background');
   },
 
+  // @t create own version for myChart
   handleSwitchToBasics: function(e) {
     this.props.trackMetric('Clicked Switch To Basics', {
       fromChart: this.state.chartType
@@ -1172,6 +1202,27 @@ export const PatientDataClass = createReactClass({
     this.updateChart(chartType, datetimeLocation, this.getChartEndpoints(datetimeLocation, { chartType }), updateOpts);
   },
 
+  handleSwitchToMyChart: function(e) {
+    this.props.trackMetric('Clicked Switch To MyChart', {
+      fromChart: this.state.chartType
+    });
+    if (e) {
+      e.preventDefault();
+    }
+
+    const chartType = 'myChart';
+
+    const getDatetimeLocation = d => moment.utc(d.valueOf())
+      .toISOString();
+
+    const mostRecentDatumTime = this.getMostRecentDatumTimeByChartType(this.props, chartType);
+    const dateCeiling = getLocalizedCeiling(mostRecentDatumTime, this.state.timePrefs);
+    const datetimeLocation = getDatetimeLocation(dateCeiling);
+
+    const updateOpts = { updateChartEndpoints: true };
+
+    this.updateChart(chartType, datetimeLocation, this.getChartEndpoints(datetimeLocation, { chartType }), updateOpts);
+  },
   handleSwitchToDaily: function(datetime, title) {
     if (title) this.props.trackMetric(`Clicked Basics ${title} calendar`, {
       fromChart: this.state.chartType
