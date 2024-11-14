@@ -23,6 +23,7 @@ const Header = withTranslation()(class Header extends Component {
     onClickBasics: PropTypes.func,
     onClickChartDates: PropTypes.func,
     onClickTrends: PropTypes.func,
+    onClickMyChart: PropTypes.func,
     onClickMostRecent: PropTypes.func,
     onClickNext: PropTypes.func,
     onClickOneDay: PropTypes.func,
@@ -59,6 +60,12 @@ const Header = withTranslation()(class Header extends Component {
     const bgLogLinkClass = cx({
       'js-bgLog': true,
       'patient-data-subnav-active': this.props.chartType === 'bgLog',
+      'patient-data-subnav-hidden': this.props.chartType === 'no-data',
+    });
+
+    const myChartLinkClass = cx({
+      'js-myChart': true,
+      'patient-data-subnav-active': this.props.chartType === 'myChart',
       'patient-data-subnav-hidden': this.props.chartType === 'no-data',
     });
 
@@ -124,7 +131,7 @@ const Header = withTranslation()(class Header extends Component {
           <a href="" className={dayLinkClass} onClick={this.props.onClickOneDay}>{t('Daily')}</a>
           <a href="" className={bgLogLinkClass} onClick={this.props.onClickBgLog}>{t('BG Log')}</a>
           <a href="" className={trendsLinkClass} onClick={this.props.onClickTrends}>{t('Trends')}</a>
-          <a href="" className={trendsLinkClass} onClick={this.props.onClickTrends}>{t('MyClass')}</a>
+          <a href="" className={myChartLinkClass} onClick={this.props.onClickMyChart}>{t('MyChart')}</a>
         </div>
         <div className="patient-data-subnav-center" id="tidelineLabel">
           {this.renderNavButton(backClass, this.props.onClickBack, this.props.iconBack)}

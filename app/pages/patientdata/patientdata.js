@@ -634,7 +634,7 @@ export const PatientDataClass = createReactClass({
             addingData={this.props.addingData}
             chartPrefs={this.state.chartPrefs}
             currentPatientInViewId={this.props.currentPatientInViewId}
-            data={this.props.data}
+            data={this.props.data} // use test data inside mychart, keep the prop to satisfy propTypes
             initialDatetimeLocation={this.state.datetimeLocation}
             loading={this.state.loading}
             mostRecentDatetimeLocation={this.state.mostRecentDatetimeLocation}
@@ -672,6 +672,7 @@ export const PatientDataClass = createReactClass({
             onSwitchToBasics={this.handleSwitchToBasics}
             onSwitchToDaily={this.handleSwitchToDaily}
             onSwitchToTrends={this.handleSwitchToTrends}
+            onSwitchToMyChart={this.handleSwitchToMyChart}
             onSwitchToSettings={this.handleSwitchToSettings}
             onSwitchToBgLog={this.handleSwitchToBgLog}
             onUpdateChartDateRange={this.handleChartDateRangeUpdate}
@@ -1206,9 +1207,6 @@ export const PatientDataClass = createReactClass({
     this.props.trackMetric('Clicked Switch To MyChart', {
       fromChart: this.state.chartType
     });
-    if (e) {
-      e.preventDefault();
-    }
 
     const chartType = 'myChart';
 
@@ -1223,6 +1221,7 @@ export const PatientDataClass = createReactClass({
 
     this.updateChart(chartType, datetimeLocation, this.getChartEndpoints(datetimeLocation, { chartType }), updateOpts);
   },
+
   handleSwitchToDaily: function(datetime, title) {
     if (title) this.props.trackMetric(`Clicked Basics ${title} calendar`, {
       fromChart: this.state.chartType

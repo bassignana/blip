@@ -7,6 +7,7 @@
   "version": "1.82.0-web-3015-dep-updates.1",
   "private": true,
   "scripts": {
+    "myCustomRun" : "NODE_ENV=development NODE_OPTIONS='--max-old-space-size=4096' yarn webpack-dev-server --color --progress --port 3000 --host 0.0.0.0",
     "test": "TZ=UTC NODE_ENV=test NODE_OPTIONS='--max-old-space-size=4096' yarn karma start",
     "pretest": "NODE_ENV=test npm run lint",
     "browser-tests": "TZ=UTC NODE_ENV=test yarn karma start --browsers Chrome",
@@ -28,6 +29,7 @@
   "dependencies": {
     "body-parser": "1.20.3",
     "custom-protocol-check": "1.4.0",
+    "d3-sankey": "^0.12.3",
     "express": "4.20.0",
     "helmet": "3.23.3",
     "i18n-iso-countries": "7.7.0",

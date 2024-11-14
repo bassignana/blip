@@ -25,7 +25,7 @@ import {
   utils as vizUtils,
 } from '@tidepool/viz';
 
-const TrendsContainer = vizContainers.TrendsContainer;
+const SankeyContainer = vizContainers.SankeyContainer;
 const getTimezoneFromTimePrefs = vizUtils.datetime.getTimezoneFromTimePrefs;
 const getLocalizedCeiling = vizUtils.datetime.getLocalizedCeiling;
 const trendsText = vizUtils.text.trendsText;
@@ -37,7 +37,7 @@ const {
   FocusedSMBGPointLabel,
 } = vizComponents;
 
-const MyChart = withTranslation()(class Trends extends PureComponent {
+const MyChart = withTranslation()(class MyChart extends PureComponent {
   static propTypes = {
     chartPrefs: PropTypes.object.isRequired,
     currentPatientInViewId: PropTypes.string.isRequired,
@@ -61,6 +61,23 @@ const MyChart = withTranslation()(class Trends extends PureComponent {
     uploadUrl: PropTypes.string.isRequired,
     removeGeneratedPDFS: PropTypes.func.isRequired,
   };
+
+  testData = {
+    'nodes': [
+      { id: 'bob' },
+      { id: 'alice' },
+      { id: 'carol' },
+      { id: 'mel' },
+      { id: 'yan' }
+    ],
+    'links': [
+      { source: 'bob', target: 'carol', value: 1 },
+      { source: 'alice', target: 'carol', value: 1 },
+      { source: 'alice', target: 'yan', value: 1 },
+      { source: 'carol', target: 'mel', value: 1 },
+      { source: 'carol', target: 'yan', value: 1 }
+    ]
+  }
 
   constructor(props) {
     super(props);
@@ -87,6 +104,7 @@ const MyChart = withTranslation()(class Trends extends PureComponent {
     this.handleClickOneWeek = this.handleClickOneWeek.bind(this);
     this.handleClickSettings = this.handleClickSettings.bind(this);
     this.handleClickTrends = this.handleClickTrends.bind(this);
+    this.handleClickMyChart = this.handleClickMyChart.bind(this);
     this.handleClickTwoWeeks = this.handleClickTwoWeeks.bind(this);
     this.handleClickBgLog = this.handleClickBgLog.bind(this);
     this.handleDatetimeLocationChange = this.handleDatetimeLocationChange.bind(this);
@@ -148,7 +166,8 @@ const MyChart = withTranslation()(class Trends extends PureComponent {
   }
 
   handleWindowResize(windowSize) {
-    this.refs.chart?.mountData();
+  // @t removed for now bc mountData is not present in chart
+  //   this.refs.chart?.mountData();
   }
 
   handleClickBack(e) {
@@ -632,6 +651,7 @@ const MyChart = withTranslation()(class Trends extends PureComponent {
         onClickBack={this.handleClickBack}
         onClickBasics={this.props.onSwitchToBasics}
         onClickTrends={this.handleClickTrends}
+        onClickMyChart={this.handleClickMyChart}
         onClickMostRecent={this.handleClickMostRecent}
         onClickNext={this.handleClickForward}
         onClickOneDay={this.handleClickDaily}
@@ -662,13 +682,13 @@ const MyChart = withTranslation()(class Trends extends PureComponent {
 
   renderChart() {
     return (
-      <TrendsContainer
+      <SankeyContainer
         activeDays={this.props.chartPrefs.trends.activeDays}
         bgPrefs={_.get(this.props, 'data.bgPrefs', {})}
-        currentPatientInViewId={this.props.currentPatientInViewId}
+        currentPatientInViewId={this.props.currentPatientInViewId} // used
         extentSize={this.props.chartPrefs.trends.extentSize}
         initialDatetimeLocation={this.props.initialDatetimeLocation}
-        loading={this.props.loading}
+        loading={this.props.loading} // used
         mostRecentDatetimeLocation={this.props.mostRecentDatetimeLocation}
         queryDataCount={this.props.queryDataCount}
         showingSmbg={this.props.chartPrefs.trends.showingSmbg}
@@ -686,7 +706,8 @@ const MyChart = withTranslation()(class Trends extends PureComponent {
         smbgLines={this.props.chartPrefs.trends.smbgLines}
         timePrefs={_.get(this.props, 'data.timePrefs', {})}
         // data
-        data={this.props.data}
+        // data={this.props.data}
+        data={this.testData}
         // handlers
         onDatetimeLocationChange={this.handleDatetimeLocationChange}
         onSelectDate={this.handleSelectDate}

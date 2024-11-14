@@ -220,6 +220,7 @@ const output = {
 
 const resolve = {
   alias: {
+    // ...linkedPackages,
     '@tidepool/viz': path.resolve(__dirname, '../viz'),
     'babel-core': path.resolve('node_modules/babel-core'),
     classnames: path.resolve('node_modules/classnames'),

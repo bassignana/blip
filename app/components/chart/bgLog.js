@@ -191,6 +191,7 @@ class BgLog extends Component {
     onSwitchToDaily: PropTypes.func.isRequired,
     onSwitchToSettings: PropTypes.func.isRequired,
     onSwitchToBgLog: PropTypes.func.isRequired,
+    onSwitchToMyChart: PropTypes.func.isRequired,
     onUpdateChartDateRange: PropTypes.func.isRequired,
     queryDataCount: PropTypes.number.isRequired,
     stats: PropTypes.array.isRequired,
@@ -365,6 +366,7 @@ class BgLog extends Component {
         onClickBack={this.handlePanBack}
         onClickBasics={this.props.onSwitchToBasics}
         onClickTrends={this.handleClickTrends}
+        onClickMyChart={this.handleClickMyChart}
         onClickMostRecent={this.handleClickMostRecent}
         onClickNext={this.handlePanForward}
         onClickOneDay={this.handleClickOneDay}
@@ -441,6 +443,16 @@ class BgLog extends Component {
     this.props.onSwitchToTrends(datetime);
   };
 
+  handleClickMyChart = e => {
+    if(e) {
+      e.preventDefault();
+    }
+    let datetime;
+    if (this.refs.chart) {
+      datetime = this.refs.chart.getCurrentDay(this.props.timePrefs);
+    }
+    this.props.onSwitchToMyChart(datetime);
+  };
   handleClickMostRecent = e => {
     if (e) {
       e.preventDefault();
